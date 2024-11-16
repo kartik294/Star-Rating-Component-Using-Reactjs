@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useState } from "react";
 function App() {
+  const [selectedStarCount, setselectedStarCount] = useState(0);
+  const [selectedHoverStarCount, setSelectedHoverStarCount] = useState(0);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Star Rating
+      <div className="stars">
+        {[...Array(5)].map((_, index) => {
+          return (
+            <span
+              key={index}
+              className={`${index + 1 <= selectedStarCount ? "selected" : ""} ${
+                index + 1 <= selectedHoverStarCount ? "selected" : ""
+              } `}
+              onMouseOver={() => {
+                setSelectedHoverStarCount(index + 1);
+              }}
+              onMouseOut={() => {
+                setSelectedHoverStarCount(0);
+              }}
+              onClick={() => {
+                setselectedStarCount(index + 1);
+              }}
+            >
+              &#9733;
+            </span>
+          );
+        })}
+      </div>
+      <p>Rating Count:{selectedStarCount};</p>
+      <p>Hover Rating Count: {selectedHoverStarCount}</p>
     </div>
   );
 }
